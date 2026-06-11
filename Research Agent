@@ -1,0 +1,32 @@
+from langchain_openai import ChatOpenAI
+from tools import search_web
+
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0
+)
+
+def research_agent(state):
+
+    topic = state["topic"]
+
+    search_results = search_web(topic)
+
+    prompt = f"""
+    Analyze the following research data.
+
+    Topic:
+    {topic}
+
+    Data:
+    {search_results}
+
+    Summarize key findings.
+    """
+
+    response = llm.invoke(prompt)
+
+    return {
+        **state,
+        "research": response.content
+    }
