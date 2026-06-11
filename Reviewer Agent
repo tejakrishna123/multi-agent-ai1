@@ -1,0 +1,33 @@
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0
+)
+
+def reviewer_agent(state):
+
+    report = state["report"]
+
+    prompt = f"""
+    Review this report.
+
+    Check:
+
+    - factual consistency
+    - missing sections
+    - grammar
+    - hallucinations
+
+    Report:
+    {report}
+
+    Return FINAL VERSION.
+    """
+
+    reviewed = llm.invoke(prompt)
+
+    return {
+        **state,
+        "final_report": reviewed.content
+    }
