@@ -1,0 +1,32 @@
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0.2
+)
+
+def writer_agent(state):
+
+    analysis = state["analysis"]
+
+    prompt = f"""
+    Create executive report.
+
+    Analysis:
+    {analysis}
+
+    Format:
+
+    Executive Summary
+
+    Key Findings
+
+    Recommendations
+    """
+
+    report = llm.invoke(prompt)
+
+    return {
+        **state,
+        "report": report.content
+    }
