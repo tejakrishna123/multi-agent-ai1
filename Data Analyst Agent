@@ -1,0 +1,31 @@
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0
+)
+
+def analyst_agent(state):
+
+    research = state["research"]
+
+    prompt = f"""
+    You are a senior data analyst.
+
+    Research:
+    {research}
+
+    Generate:
+
+    1. Trends
+    2. Risks
+    3. Opportunities
+    4. Recommendations
+    """
+
+    response = llm.invoke(prompt)
+
+    return {
+        **state,
+        "analysis": response.content
+    }
