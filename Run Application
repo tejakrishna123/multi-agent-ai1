@@ -1,0 +1,17 @@
+from graph import app
+
+query = """
+Future of Generative AI in Healthcare
+"""
+
+result = app.invoke(
+    {
+        "topic": query
+    }
+)
+
+print("\n")
+print("=" * 50)
+print("FINAL REPORT")
+print("=" * 50)
+print(result["final_report"])
